@@ -10,8 +10,8 @@
 constexpr char WIFI_NAME[]{SECRET_WIFI_NAME};
 constexpr char WIFI_PW[]{SECRET_WIFI_PW};
 
-// Currently set to webhook.site to test sending requests
-constexpr char SERVER_BASE_URL[] = "webhook.site";
+// Backend server where we will send sensor readings to
+constexpr char SERVER_HOST_NAME[] = "aquarium-monitor-server.onrender.com";
 
 // Delay (ms) between sensor reads
 constexpr int SENSORS_READ_DELAY{1000};
@@ -23,7 +23,7 @@ constexpr int TDS_PIN{A5};
 OneWire one_wire{TEMP_PIN};
 DallasTemperature sensors(&one_wire);
 
-WiFiClient client;
+WiFiSSLClient client;
 
 void setup() {
   Serial.begin(9600);
@@ -81,25 +81,25 @@ void start_wifi_client() {
   Serial.println();
 
   Serial.print("Connecting to ");
-  Serial.print(SERVER_BASE_URL);
+  Serial.print(SERVER_HOST_NAME);
   Serial.println("...");
   Serial.println();
 
   // Try connect to server
-  if (client.connect(SERVER_BASE_URL, 80)) {
+  if (client.connect(SERVER_HOST_NAME, 443)) {
     Serial.print("Successfully connected to ");
-    Serial.println(SERVER_BASE_URL);
+    Serial.println(SERVER_HOST_NAME);
     Serial.println();
 
     // Make HTTP request
-    client.println("GET /f5ca627f-dc02-4b93-bf2d-073dca5abf44 HTTP/1.1"); // Update path when generating new test URL
+    client.println("GET / HTTP/1.1");
     client.print("Host: ");
-    client.println(SERVER_BASE_URL);
+    client.println(SERVER_HOST_NAME);
     client.println("Connection: close");
     client.println();
   } else {
     Serial.print("Failed to connect to ");
-    Serial.println(SERVER_BASE_URL);
+    Serial.println(SERVER_HOST_NAME);
     Serial.println();
   }
 }
