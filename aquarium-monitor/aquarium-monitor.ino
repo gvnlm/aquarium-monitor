@@ -13,8 +13,8 @@ constexpr char WIFI_PW[]{SECRET_WIFI_PW};
 // Backend server where we will send sensor readings to
 constexpr char SERVER_HOST_NAME[] = "aquarium-monitor-server.onrender.com";
 
-// Delay (ms) between sensor reads
-constexpr int SENSORS_READ_DELAY{1000};
+// Minimum delay (ms) between sensor reads
+constexpr int SENSORS_READ_DELAY{30000};
 
 constexpr int TEMP_PIN{2};
 constexpr int TDS_PIN{A5};
@@ -41,10 +41,39 @@ void loop() {
   sensors.requestTemperatures(); 
   double temp_c = sensors.getTempCByIndex(0);
 
-  // Print readings
-  print_tds(tds_ppm);
-  print_temp(temp_c);
+  Serial.print("Establishing connection with ");
+  Serial.print(SERVER_HOST_NAME);
+  Serial.println("...");
   Serial.println();
+
+  // Try establish connection with backend server
+  if (client.connect(SERVER_HOST_NAME, 443)) {
+    Serial.print("Successfully established connection with ");
+    Serial.println(SERVER_HOST_NAME);
+    Serial.println();
+
+    String payload = "{\"tds_ppm\": " + String(tds_ppm, 0) + ", \"temp_c\": " + String(temp_c, 1) + "}";
+    Serial.print("Sending ");
+    Serial.print(payload);
+    Serial.print(" to ");
+    Serial.println(SERVER_HOST_NAME);
+    Serial.println();
+
+    // Send sensor readings to backend server via an HTTP POST request
+    client.println("POST / HTTP/1.1");
+    client.print("Host: ");
+    client.println(SERVER_HOST_NAME);
+    client.println("Content-Type: application/json");
+    client.print("Content-Length: ");
+    client.println(payload.length());
+    client.println("Connection: close");
+    client.println();
+    client.println(payload);
+  } else {
+    Serial.print("Failed to establish connection with ");
+    Serial.println(SERVER_HOST_NAME);
+    Serial.println();
+  }
 
   delay(SENSORS_READ_DELAY);
 }
@@ -79,36 +108,6 @@ void start_wifi_client() {
   Serial.print("Successfully connected to ");
   Serial.println(WIFI_NAME);
   Serial.println();
-
-  Serial.print("Connecting to ");
-  Serial.print(SERVER_HOST_NAME);
-  Serial.println("...");
-  Serial.println();
-
-  // Try connect to server
-  if (client.connect(SERVER_HOST_NAME, 443)) {
-    Serial.print("Successfully connected to ");
-    Serial.println(SERVER_HOST_NAME);
-    Serial.println();
-
-    // Test payload
-    String payload = "{\"tds_ppm\": 220, \"temp_c\": 25.5}";
-
-    // Send sensor readings to backend server via an HTTP POST request
-    client.println("POST / HTTP/1.1");
-    client.print("Host: ");
-    client.println(SERVER_HOST_NAME);
-    client.println("Content-Type: application/json");
-    client.print("Content-Length: ");
-    client.println(payload.length());
-    client.println("Connection: close");
-    client.println();
-    client.println(payload);
-  } else {
-    Serial.print("Failed to connect to ");
-    Serial.println(SERVER_HOST_NAME);
-    Serial.println();
-  }
 }
 
 void print_tds(double tds_ppm) {
