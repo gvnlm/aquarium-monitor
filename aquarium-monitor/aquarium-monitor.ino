@@ -91,12 +91,19 @@ void start_wifi_client() {
     Serial.println(SERVER_HOST_NAME);
     Serial.println();
 
-    // Make HTTP request
-    client.println("GET / HTTP/1.1");
+    // Test payload
+    String payload = "{\"tds_ppm\": 220, \"temp_c\": 25.5}";
+
+    // Send sensor readings to backend server via an HTTP POST request
+    client.println("POST / HTTP/1.1");
     client.print("Host: ");
     client.println(SERVER_HOST_NAME);
+    client.println("Content-Type: application/json");
+    client.print("Content-Length: ");
+    client.println(payload.length());
     client.println("Connection: close");
     client.println();
+    client.println(payload);
   } else {
     Serial.print("Failed to connect to ");
     Serial.println(SERVER_HOST_NAME);
