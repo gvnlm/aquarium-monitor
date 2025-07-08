@@ -69,6 +69,32 @@ void loop() {
     client.println("Connection: close");
     client.println();
     client.println(payload);
+
+    unsigned long startTime{millis()};
+
+    // Wait up to 5 seconds for response from backend server
+    while (client.available() == 0) {
+      unsigned long currTime{millis()};
+      unsigned long msElapsed{currTime - startTime};
+
+      if (msElapsed > 5000) {
+        Serial.println("Client has timed out");
+        Serial.println();
+
+        client.stop();
+
+        return;
+      }
+    }
+
+    // Parse entire response from backend server to ensure connection with
+    // backend server can be closed properly
+    while (client.available()) {
+      client.read();
+    }
+
+    // Close connection with backend server
+    client.stop();
   } else {
     Serial.print("Failed to establish connection with ");
     Serial.println(SERVER_HOST_NAME);
