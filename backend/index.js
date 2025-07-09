@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 
@@ -11,8 +12,30 @@ const TempReading = require('./models/tempReading');
 
 const app = express();
 
+// Middlewares
+app.use(cors());
 app.use(morgan('tiny'));
 app.use(express.json());
+
+app.get('/tdsReadings', async (req, res, next) => {
+  try {
+    const tdsReadings = await TdsReading.find({});
+    return res.json(tdsReadings);
+  } catch (err) {
+    console.error('Failed to query database.');
+    next(err);
+  }
+});
+
+app.get('/tempReadings', async (req, res, next) => {
+  try {
+    const tempReadings = await TempReading.find({});
+    return res.json(tempReadings);
+  } catch (err) {
+    console.error('Failed to query database.');
+    next(err);
+  }
+});
 
 app.post('/', async (req, res, next) => {
   const { tds_ppm, temp_c } = req.body || {};
