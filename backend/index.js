@@ -2,12 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 
 // Connect to MongoDB database
-const connectDB = require('./db');
+const connectDB = require('./config/db');
 connectDB();
 
 // Mongoose models
-const TdsReading = require('./tdsReading');
-const TempReading = require('./tempReading');
+const TdsReading = require('./models/tdsReading');
+const TempReading = require('./models/tempReading');
 
 const app = express();
 
