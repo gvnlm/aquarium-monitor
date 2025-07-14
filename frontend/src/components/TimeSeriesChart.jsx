@@ -30,7 +30,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
         />
 
         <YAxis
-          domain={['auto', 'auto']}
+          domain={([min, max]) => [min - 1, max + 1]}
           label={{ value: yAxisTitle, position: 'insideLeft', angle: -90 }}
         />
 
