@@ -1,15 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+import TimeSeriesChart from './components/TimeSeriesChart';
 
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
 
 const App = () => {
-  // On mount, get all readings from backend server, then log them
+  const [tdsReadings, setTdsReadings] = useState([]);
+  const [tempReadings, setTempReadings] = useState([]);
+
+  // On mount, get all readings from backend server
   useEffect(() => {
     const logTdsReadings = async () => {
       try {
         const tdsReadings = await tdsReadingsService.getAll();
-        console.log(tdsReadings);
+        setTdsReadings(tdsReadings);
       } catch (error) {
         console.log(error);
       }
@@ -18,7 +23,7 @@ const App = () => {
     const logTempReadings = async () => {
       try {
         const tempReadings = await tempReadingsService.getAll();
-        console.log(tempReadings);
+        setTempReadings(tempReadings);
       } catch (error) {
         console.log(error);
       }
@@ -27,6 +32,13 @@ const App = () => {
     logTdsReadings();
     logTempReadings();
   }, []);
+
+  return (
+    <div className="app">
+      <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" lineColour={'green'} />
+      <TimeSeriesChart data={tempReadings} yDataKey="celsius" yAxisTitle="°C" lineColour={'red'} />
+    </div>
+  );
 };
 
 export default App;
