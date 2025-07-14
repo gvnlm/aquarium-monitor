@@ -7,8 +7,20 @@ const TempReading = require('../models/tempReading');
 const router = express.Router();
 
 router.get('/tdsReadings', async (req, res, next) => {
+  const { startDate, endDate } = req.query;
+
+  if (startDate === undefined || endDate === undefined) {
+    console.error('Missing start date and/or end date.');
+    return res.status(400).end();
+  }
+
   try {
-    const tdsReadings = await TdsReading.find({});
+    const tdsReadings = await TdsReading.find({
+      timestamp: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
     return res.json(tdsReadings);
   } catch (err) {
     console.error('Failed to fetch TDS readings from database.');
@@ -17,8 +29,20 @@ router.get('/tdsReadings', async (req, res, next) => {
 });
 
 router.get('/tempReadings', async (req, res, next) => {
+  const { startDate, endDate } = req.query;
+
+  if (startDate === undefined || endDate === undefined) {
+    console.error('Missing start date and/or end date.');
+    return res.status(400).end();
+  }
+
   try {
-    const tempReadings = await TempReading.find({});
+    const tempReadings = await TempReading.find({
+      timestamp: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
     return res.json(tempReadings);
   } catch (err) {
     console.error('Failed to fetch temperature readings from database.');

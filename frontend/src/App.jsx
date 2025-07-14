@@ -14,11 +14,11 @@ const App = () => {
   const [tdsReadings, setTdsReadings] = useState([]);
   const [tempReadings, setTempReadings] = useState([]);
 
-  // On mount, get all readings from backend server
+  // Whenever date range is changed, get readings within date range from backend server
   useEffect(() => {
     const logTdsReadings = async () => {
       try {
-        const tdsReadings = await tdsReadingsService.getAll();
+        const tdsReadings = await tdsReadingsService.getRange(startDate, endDate);
         setTdsReadings(tdsReadings);
       } catch (error) {
         console.log(error);
@@ -27,7 +27,7 @@ const App = () => {
 
     const logTempReadings = async () => {
       try {
-        const tempReadings = await tempReadingsService.getAll();
+        const tempReadings = await tempReadingsService.getRange(startDate, endDate);
         setTempReadings(tempReadings);
       } catch (error) {
         console.log(error);
@@ -36,7 +36,7 @@ const App = () => {
 
     logTdsReadings();
     logTempReadings();
-  }, []);
+  }, [startDate, endDate]);
 
   return (
     <div className="app">
