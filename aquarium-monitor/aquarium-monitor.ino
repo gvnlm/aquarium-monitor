@@ -11,7 +11,11 @@ constexpr char WIFI_NAME[]{SECRET_WIFI_NAME};
 constexpr char WIFI_PW[]{SECRET_WIFI_PW};
 
 // Backend server where we will send sensor readings to
-constexpr char SERVER_HOST_NAME[] = "aquarium-monitor-server.onrender.com";
+constexpr char SERVER_HOST_NAME[]{"aquarium-monitor-server.onrender.com"};
+
+// Max time (ms) requests can be delayed by when the backend server hosted on Render has spun down 
+// due to inactivity
+constexpr int RENDER_COLD_START_MAX_DELAY{50000};
 
 // Minimum delay (ms) between sensor reads
 constexpr int SENSORS_READ_DELAY{30000};
@@ -72,12 +76,12 @@ void loop() {
 
     unsigned long startTime{millis()};
 
-    // Wait up to 5 seconds for response from backend server
+    // Wait up to 50 seconds for response from backend server
     while (client.available() == 0) {
       unsigned long currTime{millis()};
       unsigned long msElapsed{currTime - startTime};
 
-      if (msElapsed > 5000) {
+      if (msElapsed > RENDER_COLD_START_MAX_DELAY) {
         Serial.println("Client has timed out");
         Serial.println();
 
