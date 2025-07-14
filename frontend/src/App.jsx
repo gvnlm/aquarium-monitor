@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
+import DateTimeRangePicker from './components/DateRangePicker';
 
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
 
 const App = () => {
+  // Date range of readings to display
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
   const [tdsReadings, setTdsReadings] = useState([]);
   const [tempReadings, setTempReadings] = useState([]);
 
@@ -35,6 +40,13 @@ const App = () => {
 
   return (
     <div className="app">
+      <DateTimeRangePicker
+        startDate={startDate}
+        endDate={endDate}
+        onStartDateChange={setStartDate}
+        onEndDateChange={setEndDate}
+      />
+
       <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" lineColour={'green'} />
       <TimeSeriesChart data={tempReadings} yDataKey="celsius" yAxisTitle="°C" lineColour={'red'} />
     </div>
