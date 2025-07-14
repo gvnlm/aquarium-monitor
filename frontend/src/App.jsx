@@ -8,7 +8,7 @@ import tempReadingsService from './services/tempReadings';
 
 const App = () => {
   // Date range of readings to display
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(getDateXHoursAgo(1));
   const [endDate, setEndDate] = useState(new Date());
 
   const [tdsReadings, setTdsReadings] = useState([]);
@@ -51,6 +51,12 @@ const App = () => {
       <TimeSeriesChart data={tempReadings} yDataKey="celsius" yAxisTitle="°C" lineColour={'red'} />
     </div>
   );
+};
+
+const getDateXHoursAgo = (x) => {
+  const now = new Date();
+  now.setHours(now.getHours() - x);
+  return now;
 };
 
 export default App;
