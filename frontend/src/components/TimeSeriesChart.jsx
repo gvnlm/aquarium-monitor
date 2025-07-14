@@ -44,11 +44,11 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
 
 // Converts time represented by milliseconds since UNIX epoch, to a formatted string
 const unixTimeMsToString = (timestamp) =>
-  new Date(timestamp).toLocaleTimeString([], {
-    year: 'numeric',
+  new Date(timestamp).toLocaleString([], {
+    year: '2-digit',
     month: 'numeric',
     day: 'numeric',
-    hour: '2-digit',
+    hour: 'numeric',
     minute: '2-digit',
     hour12: true,
   });
