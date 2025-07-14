@@ -16,7 +16,7 @@ const App = () => {
 
   // Whenever date range is changed, get readings within date range from backend server
   useEffect(() => {
-    const logTdsReadings = async () => {
+    const loadTdsReadings = async () => {
       try {
         const tdsReadings = await tdsReadingsService.getRange(startDate, endDate);
         setTdsReadings(tdsReadings);
@@ -25,7 +25,7 @@ const App = () => {
       }
     };
 
-    const logTempReadings = async () => {
+    const loadTempReadings = async () => {
       try {
         const tempReadings = await tempReadingsService.getRange(startDate, endDate);
         setTempReadings(tempReadings);
@@ -34,8 +34,8 @@ const App = () => {
       }
     };
 
-    logTdsReadings();
-    logTempReadings();
+    loadTdsReadings();
+    loadTempReadings();
   }, [startDate, endDate]);
 
   return (
