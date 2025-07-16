@@ -18,7 +18,7 @@ constexpr char SERVER_HOST_NAME[]{"aquarium-monitor-server.onrender.com"};
 constexpr int RENDER_COLD_START_MAX_DELAY{50000};
 
 // Minimum delay (ms) between sensor reads
-constexpr int SENSORS_READ_DELAY{30000};
+constexpr int SENSORS_READ_DELAY{120000};
 
 constexpr int TEMP_PIN{2};
 constexpr int TDS_PIN{A5};
