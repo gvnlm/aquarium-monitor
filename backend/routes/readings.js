@@ -6,21 +6,78 @@ const TempReading = require('../models/tempReading');
 
 const router = express.Router();
 
-router.get('/tdsReadings', async (req, res, next) => {
-  const { startDate, endDate } = req.query;
+// Maximum number of readings returned in a response
+const MAX_NUM_OF_READINGS = 30;
 
-  if (startDate === undefined || endDate === undefined) {
-    console.error('Missing start date and/or end date.');
+router.get('/tdsReadings', async (req, res, next) => {
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
+
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    console.error('Missing/invalid start date and/or end date.');
     return res.status(400).end();
   }
 
   try {
-    const tdsReadings = await TdsReading.find({
+    let tdsReadings = [];
+
+    const numOfReadings = await TdsReading.countDocuments({
       timestamp: {
         $gte: startDate,
         $lte: endDate,
       },
     });
+
+    if (numOfReadings <= MAX_NUM_OF_READINGS) {
+      tdsReadings = await TdsReading.find({
+        timestamp: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      });
+    } else {
+      // Aggregate readings into `MAX_NUM_OF_READINGS` buckets
+
+      const dateRangeDurationMs = endDate.getTime() - startDate.getTime();
+      // Round up to ensure the number of buckets does not exceed `MAX_NUM_OF_BUCKETS`
+      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (MAX_NUM_OF_READINGS - 1));
+
+      tdsReadings = await TdsReading.aggregate([
+        // Find all readings within the date range
+        {
+          $match: {
+            timestamp: { $gte: startDate, $lte: endDate },
+          },
+        },
+        // Assign each reading a bucket number based on their timestamp
+        {
+          $addFields: {
+            bucket: {
+              $floor: {
+                $divide: [{ $toLong: '$timestamp' }, bucketDurationMs],
+              },
+            },
+          },
+        },
+        // Aggregate readings within the same bucket (i.e., have the same bucket number)
+        {
+          $group: {
+            _id: '$bucket',
+            ppm: { $avg: '$ppm' },
+            timestamp: { $avg: { $toLong: '$timestamp' } },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            ppm: { $round: ['$ppm'] },
+            timestamp: { $toDate: '$timestamp' },
+          },
+        },
+        { $sort: { timestamp: 1 } },
+      ]);
+    }
+
     return res.json(tdsReadings);
   } catch (err) {
     console.error('Failed to fetch TDS readings from database.');
@@ -29,20 +86,74 @@ router.get('/tdsReadings', async (req, res, next) => {
 });
 
 router.get('/tempReadings', async (req, res, next) => {
-  const { startDate, endDate } = req.query;
+  const startDate = new Date(req.query.startDate);
+  const endDate = new Date(req.query.endDate);
 
-  if (startDate === undefined || endDate === undefined) {
-    console.error('Missing start date and/or end date.');
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    console.error('Missing/invalid start date and/or end date.');
     return res.status(400).end();
   }
 
   try {
-    const tempReadings = await TempReading.find({
+    let tempReadings = [];
+
+    const numOfReadings = await TempReading.countDocuments({
       timestamp: {
         $gte: startDate,
         $lte: endDate,
       },
     });
+
+    if (numOfReadings <= MAX_NUM_OF_READINGS) {
+      tempReadings = await TempReading.find({
+        timestamp: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      });
+    } else {
+      // Aggregate readings into `MAX_NUM_OF_READINGS` buckets
+
+      const dateRangeDurationMs = endDate.getTime() - startDate.getTime();
+      // Round up to ensure the number of buckets does not exceed `MAX_NUM_OF_BUCKETS`
+      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (MAX_NUM_OF_READINGS - 1));
+
+      tempReadings = await TempReading.aggregate([
+        // Find all readings within the date range
+        {
+          $match: {
+            timestamp: { $gte: startDate, $lte: endDate },
+          },
+        },
+        // Assign each reading a bucket number based on their timestamp
+        {
+          $addFields: {
+            bucket: {
+              $floor: {
+                $divide: [{ $toLong: '$timestamp' }, bucketDurationMs],
+              },
+            },
+          },
+        },
+        // Aggregate readings within the same bucket (i.e., have the same bucket number)
+        {
+          $group: {
+            _id: '$bucket',
+            celsius: { $avg: '$celsius' },
+            timestamp: { $avg: { $toLong: '$timestamp' } },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            celsius: { $round: ['$celsius', 1] },
+            timestamp: { $toDate: '$timestamp' },
+          },
+        },
+        { $sort: { timestamp: 1 } },
+      ]);
+    }
+
     return res.json(tempReadings);
   } catch (err) {
     console.error('Failed to fetch temperature readings from database.');
