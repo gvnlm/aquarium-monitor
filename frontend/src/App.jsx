@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
 import DateTimeRangePicker from './components/DateRangePicker';
+import MaxNumOfReadingsForm from './components/MaxNumOfReadingsForm';
 
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
@@ -11,6 +12,9 @@ const App = () => {
   const [startDate, setStartDate] = useState(getDateXHoursAgo(1));
   const [endDate, setEndDate] = useState(new Date());
 
+  // Maximum number of readings (i.e., readings) displayed on each chart
+  const [maxNumOfReadings, setMaxNumOfReadings] = useState(30);
+
   const [tdsReadings, setTdsReadings] = useState([]);
   const [tempReadings, setTempReadings] = useState([]);
 
@@ -18,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const loadTdsReadings = async () => {
       try {
-        const tdsReadings = await tdsReadingsService.getRange(startDate, endDate);
+        const tdsReadings = await tdsReadingsService.getRange(startDate, endDate, maxNumOfReadings);
         setTdsReadings(tdsReadings);
       } catch (error) {
         console.log(error);
@@ -27,7 +31,11 @@ const App = () => {
 
     const loadTempReadings = async () => {
       try {
-        const tempReadings = await tempReadingsService.getRange(startDate, endDate);
+        const tempReadings = await tempReadingsService.getRange(
+          startDate,
+          endDate,
+          maxNumOfReadings
+        );
         setTempReadings(tempReadings);
       } catch (error) {
         console.log(error);
@@ -36,10 +44,15 @@ const App = () => {
 
     loadTdsReadings();
     loadTempReadings();
-  }, [startDate, endDate]);
+  }, [startDate, endDate, maxNumOfReadings]);
 
   return (
     <div className="app">
+      <MaxNumOfReadingsForm
+        maxNumOfReadings={maxNumOfReadings}
+        setMaxNumOfReadings={setMaxNumOfReadings}
+      />
+
       <DateTimeRangePicker
         startDate={startDate}
         endDate={endDate}

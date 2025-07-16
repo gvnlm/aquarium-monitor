@@ -6,12 +6,15 @@ const TempReading = require('../models/tempReading');
 
 const router = express.Router();
 
-// Maximum number of readings returned in a response
-const MAX_NUM_OF_READINGS = 30;
-
 router.get('/tdsReadings', async (req, res, next) => {
   const startDate = new Date(req.query.startDate);
   const endDate = new Date(req.query.endDate);
+  const maxNumOfReadings = req.query.maxNumOfReadings;
+
+  if (isNaN(maxNumOfReadings) || maxNumOfReadings < 1) {
+    console.error('Missing/invalid max number of readings to return.');
+    return res.status(400).end();
+  }
 
   if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
     console.error('Missing/invalid start date and/or end date.');
@@ -28,7 +31,7 @@ router.get('/tdsReadings', async (req, res, next) => {
       },
     });
 
-    if (numOfReadings <= MAX_NUM_OF_READINGS) {
+    if (numOfReadings <= maxNumOfReadings) {
       tdsReadings = await TdsReading.find({
         timestamp: {
           $gte: startDate,
@@ -36,11 +39,11 @@ router.get('/tdsReadings', async (req, res, next) => {
         },
       });
     } else {
-      // Aggregate readings into `MAX_NUM_OF_READINGS` buckets
+      // Aggregate readings into `maxNumOfReadings` buckets
 
       const dateRangeDurationMs = endDate.getTime() - startDate.getTime();
       // Round up to ensure the number of buckets does not exceed `MAX_NUM_OF_BUCKETS`
-      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (MAX_NUM_OF_READINGS - 1));
+      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (maxNumOfReadings - 1));
 
       tdsReadings = await TdsReading.aggregate([
         // Find all readings within the date range
@@ -88,6 +91,12 @@ router.get('/tdsReadings', async (req, res, next) => {
 router.get('/tempReadings', async (req, res, next) => {
   const startDate = new Date(req.query.startDate);
   const endDate = new Date(req.query.endDate);
+  const maxNumOfReadings = req.query.maxNumOfReadings;
+
+  if (isNaN(maxNumOfReadings) || maxNumOfReadings < 1) {
+    console.error('Missing/invalid max number of readings to return.');
+    return res.status(400).end();
+  }
 
   if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
     console.error('Missing/invalid start date and/or end date.');
@@ -104,7 +113,7 @@ router.get('/tempReadings', async (req, res, next) => {
       },
     });
 
-    if (numOfReadings <= MAX_NUM_OF_READINGS) {
+    if (numOfReadings <= maxNumOfReadings) {
       tempReadings = await TempReading.find({
         timestamp: {
           $gte: startDate,
@@ -112,11 +121,11 @@ router.get('/tempReadings', async (req, res, next) => {
         },
       });
     } else {
-      // Aggregate readings into `MAX_NUM_OF_READINGS` buckets
+      // Aggregate readings into `maxNumOfReadings` buckets
 
       const dateRangeDurationMs = endDate.getTime() - startDate.getTime();
       // Round up to ensure the number of buckets does not exceed `MAX_NUM_OF_BUCKETS`
-      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (MAX_NUM_OF_READINGS - 1));
+      const bucketDurationMs = Math.ceil(dateRangeDurationMs / (maxNumOfReadings - 1));
 
       tempReadings = await TempReading.aggregate([
         // Find all readings within the date range
