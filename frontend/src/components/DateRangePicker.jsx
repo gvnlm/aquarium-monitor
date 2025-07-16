@@ -13,6 +13,7 @@ const DateTimeRangePicker = ({ startDate, endDate, onStartDateChange, onEndDateC
         onChange={(date) => onStartDateChange(date)}
         maxDate={new Date()}
         showTimeSelect
+        timeIntervals={15}
         dateFormat="Pp"
         popperPlacement="top-start"
       />
@@ -25,6 +26,7 @@ const DateTimeRangePicker = ({ startDate, endDate, onStartDateChange, onEndDateC
         minDate={startDate}
         maxDate={new Date()}
         showTimeSelect
+        timeIntervals={15}
         dateFormat="Pp"
         popperPlacement="top-start"
       />
