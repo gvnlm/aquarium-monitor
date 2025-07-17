@@ -10,7 +10,11 @@ const DateTimeRangePicker = ({ startDate, endDate, onStartDateChange, onEndDateC
       <DatePicker
         id="start-date-time"
         selected={startDate}
-        onChange={(date) => onStartDateChange(date)}
+        onChange={(date) => {
+          if (date.getTime() !== startDate.getTime()) {
+            onStartDateChange(date);
+          }
+        }}
         maxDate={new Date()}
         showTimeSelect
         timeIntervals={15}
@@ -22,7 +26,11 @@ const DateTimeRangePicker = ({ startDate, endDate, onStartDateChange, onEndDateC
       <DatePicker
         id="end-date-time"
         selected={endDate}
-        onChange={(date) => onEndDateChange(date)}
+        onChange={(date) => {
+          if (date.getTime() !== endDate.getTime()) {
+            onEndDateChange(date);
+          }
+        }}
         minDate={startDate}
         maxDate={new Date()}
         showTimeSelect
