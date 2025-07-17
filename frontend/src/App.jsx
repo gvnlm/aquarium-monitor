@@ -63,6 +63,8 @@ const App = () => {
         onEndDateChange={setEndDate}
       />
 
+      <button onClick={loadReadings}>Refresh</button>
+
       <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" lineColour={'green'} />
       <TimeSeriesChart data={tempReadings} yDataKey="celsius" yAxisTitle="°C" lineColour={'red'} />
     </div>
