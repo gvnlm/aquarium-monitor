@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
 import FilterForm from './components/FilterForm';
@@ -77,7 +78,9 @@ const App = () => {
         <div className="latest-entry-section">
           <span>
             Latest entry:{' '}
-            {timestampOfLatestEntry !== null ? formatDate(timestampOfLatestEntry) : 'N/A'}
+            {timestampOfLatestEntry !== null
+              ? formatDistanceToNow(timestampOfLatestEntry, { addSuffix: true })
+              : 'N/A'}
           </span>
 
           <button
@@ -108,17 +111,6 @@ const getDateXHoursAgo = (x) => {
   const now = new Date();
   now.setHours(now.getHours() - x);
   return now;
-};
-
-const formatDate = (date) => {
-  return date.toLocaleString([], {
-    year: '2-digit',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-  });
 };
 
 export default App;
