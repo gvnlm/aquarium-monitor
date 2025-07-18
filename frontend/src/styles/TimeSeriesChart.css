@@ -12,3 +12,8 @@
 .time-series-chart .responsive-container {
   padding-right: 1em;
 }
+
+/* Disable focus outline when chart is clicked */
+.time-series-chart .responsive-container *:focus {
+  outline: none;
+}
