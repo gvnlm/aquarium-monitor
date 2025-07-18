@@ -21,7 +21,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
   return (
     <div className="time-series-chart">
       <h1>{title}</h1>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer className="responsive-container" width="100%" height="100%">
         <LineChart data={processedData}>
           <CartesianGrid strokeDasharray="3 3" />
 
