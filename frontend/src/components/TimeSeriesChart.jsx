@@ -8,6 +8,8 @@ import {
   CartesianGrid,
 } from 'recharts';
 
+import '../styles/TimeSeriesChart.css';
+
 const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
   // Convert data's timestamp strings to numeric representation (since Recharts requires numeric values for
   // accurate time axis scaling)
@@ -17,28 +19,30 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
   }));
 
   return (
-    <ResponsiveContainer width="50%" height={500}>
-      <LineChart data={processedData}>
-        <CartesianGrid strokeDasharray="3 3" />
+    <div className="time-series-chart">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={processedData}>
+          <CartesianGrid strokeDasharray="3 3" />
 
-        <XAxis
-          dataKey="timestamp"
-          type="number"
-          scale="time"
-          domain={['auto', 'auto']}
-          tickFormatter={unixTimeMsToString}
-        />
+          <XAxis
+            dataKey="timestamp"
+            type="number"
+            scale="time"
+            domain={['auto', 'auto']}
+            tickFormatter={unixTimeMsToString}
+          />
 
-        <YAxis
-          domain={[0, 'auto']}
-          label={{ value: yAxisTitle, position: 'insideLeft', angle: -90 }}
-        />
+          <YAxis
+            domain={[0, 'auto']}
+            label={{ value: yAxisTitle, position: 'insideLeft', angle: -90 }}
+          />
 
-        <Line type="linear" dataKey={yDataKey} stroke={lineColour} dot={false} />
+          <Line type="linear" dataKey={yDataKey} stroke={lineColour} dot={false} />
 
-        <Tooltip labelFormatter={unixTimeMsToString} />
-      </LineChart>
-    </ResponsiveContainer>
+          <Tooltip labelFormatter={unixTimeMsToString} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

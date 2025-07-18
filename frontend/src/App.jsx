@@ -7,6 +7,8 @@ import MaxNumOfReadingsForm from './components/MaxNumOfReadingsForm';
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
 
+import './styles/App.css';
+
 const App = () => {
   // Date range of readings to display
   const [startDate, setStartDate] = useState(getDateXHoursAgo(24));
@@ -51,22 +53,31 @@ const App = () => {
 
   return (
     <div className="app">
-      <MaxNumOfReadingsForm
-        maxNumOfReadings={maxNumOfReadings}
-        setMaxNumOfReadings={setMaxNumOfReadings}
-      />
+      <div className="toolbar">
+        <MaxNumOfReadingsForm
+          maxNumOfReadings={maxNumOfReadings}
+          setMaxNumOfReadings={setMaxNumOfReadings}
+        />
 
-      <DateTimeRangePicker
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={setStartDate}
-        onEndDateChange={setEndDate}
-      />
+        <DateTimeRangePicker
+          startDate={startDate}
+          endDate={endDate}
+          onStartDateChange={setStartDate}
+          onEndDateChange={setEndDate}
+        />
 
-      <button onClick={loadReadings}>Refresh</button>
+        <button onClick={loadReadings}>Refresh</button>
+      </div>
 
-      <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" lineColour={'green'} />
-      <TimeSeriesChart data={tempReadings} yDataKey="celsius" yAxisTitle="°C" lineColour={'red'} />
+      <div className="charts">
+        <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" lineColour={'green'} />
+        <TimeSeriesChart
+          data={tempReadings}
+          yDataKey="celsius"
+          yAxisTitle="°C"
+          lineColour={'red'}
+        />
+      </div>
     </div>
   );
 };
