@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
-import FilterForm from './components/FilterForm';
+import DateRangeForm from './components/DateRangeForm';
+import MaxPointsForm from './components/MaxPointsForm';
 
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
@@ -66,14 +67,19 @@ const App = () => {
   return (
     <div className="app">
       <div className="toolbar">
-        <FilterForm
-          maxNumOfReadings={maxNumOfReadings}
-          onMaxNumOfReadingsChange={setMaxNumOfReadings}
-          startDate={startDate}
-          endDate={endDate}
-          onStartDateChange={setStartDate}
-          onEndDateChange={setEndDate}
-        />
+        <div className="settings">
+          <DateRangeForm
+            startDate={startDate}
+            endDate={endDate}
+            onStartDateChange={setStartDate}
+            onEndDateChange={setEndDate}
+          />
+
+          <MaxPointsForm
+            maxNumOfReadings={maxNumOfReadings}
+            onMaxNumOfReadingsChange={setMaxNumOfReadings}
+          />
+        </div>
 
         <div className="latest-entry-section">
           <span>

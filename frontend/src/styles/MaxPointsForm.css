@@ -1,0 +1,21 @@
+.max-points-form {
+  display: flex;
+  align-items: center;
+  gap: 0.33em; /* Mimics a single whitespace */
+}
+
+.max-points-form input {
+  width: 5.5ch;
+}
+
+/* Remove spinner controls from number input */
+.max-points-form input[type='number']::-webkit-outer-spin-button,
+.max-points-form input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.max-points-form input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}

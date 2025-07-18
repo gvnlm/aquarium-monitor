@@ -1,33 +1,11 @@
-import { useState } from 'react';
-
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import '../styles/FilterForm.css';
+import '../styles/DateRangeForm.css';
 
-const FilterForm = ({
-  maxNumOfReadings,
-  onMaxNumOfReadingsChange,
-  startDate,
-  endDate,
-  onStartDateChange,
-  onEndDateChange,
-}) => {
-  const [input, setInput] = useState(maxNumOfReadings);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const num = Number(input);
-    if (num > 0) {
-      onMaxNumOfReadingsChange(num);
-    }
-  };
-
+const DateRangeForm = ({ startDate, endDate, onStartDateChange, onEndDateChange }) => {
   return (
-    <form className="filter-form" onSubmit={handleSubmit}>
-      <button type="submit">Set</button>
-
+    <div className="date-range-form">
       <label htmlFor="start-date">From:</label>
       <DatePicker
         id="start-date"
@@ -62,18 +40,8 @@ const FilterForm = ({
         dateFormat="d/MM/yy, h:mm aa"
         popperPlacement="top-start"
       />
-
-      <label htmlFor="points">Points:</label>
-      <input
-        id="points"
-        type="number"
-        min="1"
-        max="9999"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-    </form>
+    </div>
   );
 };
 
-export default FilterForm;
+export default DateRangeForm;

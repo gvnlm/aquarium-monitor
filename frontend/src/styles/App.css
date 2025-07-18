@@ -16,6 +16,13 @@
   align-items: center;
 }
 
+.app .toolbar .settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.33rem;
+}
+
 .app .charts {
   flex: 1 1 auto;
   display: flex;
