@@ -81,9 +81,9 @@ const App = () => {
           />
         </div>
 
-        <div className="latest-entry-section">
+        <div className="last-updated-section">
           <span>
-            Latest entry:{' '}
+            Last updated:{' '}
             {timestampOfLatestEntry !== null
               ? formatDistanceToNow(timestampOfLatestEntry, { addSuffix: true })
               : 'N/A'}

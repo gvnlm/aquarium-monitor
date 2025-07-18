@@ -33,7 +33,7 @@
   gap: 1rem;
 }
 
-.app .toolbar .latest-entry-section {
+.app .toolbar .last-updated-section {
   display: flex;
   justify-content: center;
   align-items: center;
