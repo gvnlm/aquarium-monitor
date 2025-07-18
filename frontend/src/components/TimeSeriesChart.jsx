@@ -34,7 +34,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
 
           <YAxis
             domain={[0, 'auto']}
-            label={{ value: yAxisTitle, position: 'insideLeft', angle: -90 }}
+            label={{ value: yAxisTitle, position: 'insideLeft', angle: -90, offset: 8 }}
           />
 
           <Line type="basis" dataKey={yDataKey} stroke={lineColour} dot={false} />
