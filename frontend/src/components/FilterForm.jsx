@@ -26,19 +26,12 @@ const FilterForm = ({
 
   return (
     <form className="filter-form" onSubmit={handleSubmit}>
-      <span>Show up to</span>
+      <button type="submit">Set</button>
 
-      <input
-        type="number"
-        min="1"
-        max="9999"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-
-      <span>aggregated data points from</span>
-
+      <label htmlFor="start-date">From:</label>
       <DatePicker
+        id="start-date"
+        className="date-picker"
         selected={startDate}
         onChange={(date) => {
           if (date.getTime() !== startDate.getTime()) {
@@ -52,9 +45,10 @@ const FilterForm = ({
         popperPlacement="top-start"
       />
 
-      <span>to</span>
-
+      <label htmlFor="end-date">To:</label>
       <DatePicker
+        id="end-date"
+        className="date-picker"
         selected={endDate}
         onChange={(date) => {
           if (date.getTime() !== endDate.getTime()) {
@@ -69,7 +63,15 @@ const FilterForm = ({
         popperPlacement="top-start"
       />
 
-      <button type="submit">Set</button>
+      <label htmlFor="points">Points:</label>
+      <input
+        id="points"
+        type="number"
+        min="1"
+        max="9999"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
     </form>
   );
 };
