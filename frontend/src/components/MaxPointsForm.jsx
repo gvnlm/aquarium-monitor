@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 import '../styles/MaxPointsForm.css';
 
@@ -16,7 +17,15 @@ const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
 
   return (
     <form className="max-points-form" onSubmit={handleSubmit}>
-      <label htmlFor="points">Points:</label>
+      <label
+        htmlFor="points"
+        data-tooltip-id="points"
+        data-tooltip-html="Max number of data points per chart.<br/>Excess data is aggregated."
+      >
+        Points:
+      </label>
+      <ReactTooltip id="points" />
+
       <input
         id="points"
         type="number"
@@ -25,6 +34,7 @@ const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
+
       <button type="submit">Set</button>
     </form>
   );

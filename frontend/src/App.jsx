@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
 import DateRangeForm from './components/DateRangeForm';
@@ -82,12 +83,16 @@ const App = () => {
         </div>
 
         <div className="last-updated-section">
-          <span>
+          <span
+            data-tooltip-id="last-updated"
+            data-tooltip-content="Time since last sensor reading was received."
+          >
             Last updated:{' '}
             {timestampOfLatestEntry !== null
               ? formatDistanceToNow(timestampOfLatestEntry, { addSuffix: true })
               : 'N/A'}
           </span>
+          <ReactTooltip id="last-updated" />
 
           <button
             onClick={() => {
