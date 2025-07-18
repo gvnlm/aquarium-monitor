@@ -19,8 +19,11 @@ const App = () => {
   const [tdsReadings, setTdsReadings] = useState([]);
   const [tempReadings, setTempReadings] = useState([]);
 
+  const [timestampOfLatestEntry, setTimestampOfLatestEntry] = useState(null);
+
   useEffect(() => {
     loadReadings();
+    loadTimestampOfLatestEntry();
   }, [startDate, endDate, maxNumOfReadings]);
 
   const loadReadings = async () => {
@@ -36,6 +39,15 @@ const App = () => {
     try {
       const tdsReadings = await tdsReadingsService.getRange(startDate, endDate, maxNumOfReadings);
       setTdsReadings(tdsReadings);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadTimestampOfLatestEntry = async () => {
+    try {
+      const latestTdsReadings = await tdsReadingsService.getLatest();
+      setTimestampOfLatestEntry(new Date(latestTdsReadings.timestamp));
     } catch (error) {
       console.log(error);
     }
@@ -62,7 +74,21 @@ const App = () => {
           onEndDateChange={setEndDate}
         />
 
-        <button onClick={loadReadings}>Refresh</button>
+        <div className="latest-entry-section">
+          <span>
+            Latest entry:{' '}
+            {timestampOfLatestEntry !== null ? formatDate(timestampOfLatestEntry) : 'N/A'}
+          </span>
+
+          <button
+            onClick={() => {
+              loadReadings();
+              loadTimestampOfLatestEntry();
+            }}
+          >
+            Refresh
+          </button>
+        </div>
       </div>
 
       <div className="charts">
@@ -82,6 +108,17 @@ const getDateXHoursAgo = (x) => {
   const now = new Date();
   now.setHours(now.getHours() - x);
   return now;
+};
+
+const formatDate = (date) => {
+  return date.toLocaleString([], {
+    year: '2-digit',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
 };
 
 export default App;

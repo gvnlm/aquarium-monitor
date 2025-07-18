@@ -12,6 +12,7 @@
   flex: 0 1 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .app .charts {
@@ -19,4 +20,11 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.app .toolbar .latest-entry-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.33em; /* Mimics a single whitespace */
 }

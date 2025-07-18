@@ -16,6 +16,12 @@ const getRange = async (startDate, endDate, maxNumOfReadings) => {
   return response.data;
 };
 
+const getLatest = async () => {
+  const response = await axios.get(`${BASE_URL}/latest`);
+  return response.data;
+};
+
 export default {
   getRange,
+  getLatest,
 };
