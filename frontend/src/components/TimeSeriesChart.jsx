@@ -37,7 +37,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
             label={{ value: yAxisTitle, position: 'insideLeft', angle: -90 }}
           />
 
-          <Line type="linear" dataKey={yDataKey} stroke={lineColour} dot={false} />
+          <Line type="basis" dataKey={yDataKey} stroke={lineColour} dot={false} />
 
           <Tooltip labelFormatter={unixTimeMsToString} />
         </LineChart>
