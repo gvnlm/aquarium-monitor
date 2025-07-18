@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import TimeSeriesChart from './components/TimeSeriesChart';
-import DateTimeRangePicker from './components/DateRangePicker';
-import MaxNumOfReadingsForm from './components/MaxNumOfReadingsForm';
+import FilterForm from './components/FilterForm';
 
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
@@ -54,12 +53,9 @@ const App = () => {
   return (
     <div className="app">
       <div className="toolbar">
-        <MaxNumOfReadingsForm
+        <FilterForm
           maxNumOfReadings={maxNumOfReadings}
-          setMaxNumOfReadings={setMaxNumOfReadings}
-        />
-
-        <DateTimeRangePicker
+          onMaxNumOfReadingsChange={setMaxNumOfReadings}
           startDate={startDate}
           endDate={endDate}
           onStartDateChange={setStartDate}

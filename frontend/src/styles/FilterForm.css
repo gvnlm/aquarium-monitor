@@ -1,0 +1,4 @@
+.filter-form {
+  display: flex; /* Prevents calender popup from pushing neighbours */
+  gap: 0.33em; /* Mimics a single whitespace */
+}
