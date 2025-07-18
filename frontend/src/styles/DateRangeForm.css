@@ -1,7 +1,13 @@
 .date-range-form {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.33em; /* Mimics a single whitespace */
+}
+
+.date-range-form .date-form {
+  display: flex;
+  gap: 0.33em;
 }
 
 .date-range-form .date-picker {
