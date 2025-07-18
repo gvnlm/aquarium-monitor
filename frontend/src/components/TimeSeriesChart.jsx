@@ -10,7 +10,7 @@ import {
 
 import '../styles/TimeSeriesChart.css';
 
-const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
+const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
   // Convert data's timestamp strings to numeric representation (since Recharts requires numeric values for
   // accurate time axis scaling)
   const processedData = data.map((datum) => ({
@@ -20,6 +20,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour }) => {
 
   return (
     <div className="time-series-chart">
+      <h1>{title}</h1>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={processedData}>
           <CartesianGrid strokeDasharray="3 3" />
