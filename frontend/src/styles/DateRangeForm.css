@@ -7,6 +7,7 @@
 
 .date-range-form .date-form {
   display: flex;
+  align-items: center;
   gap: 0.33em;
 }
 
