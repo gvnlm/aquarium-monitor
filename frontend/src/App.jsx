@@ -6,6 +6,8 @@ import TimeSeriesChart from './components/TimeSeriesChart';
 import DateRangeForm from './components/DateRangeForm';
 import MaxPointsForm from './components/MaxPointsForm';
 
+import RefreshIcon from './icons/RefreshIcon';
+
 import tdsReadingsService from './services/tdsReadings';
 import tempReadingsService from './services/tempReadings';
 
@@ -94,14 +96,13 @@ const App = () => {
           </span>
           <ReactTooltip id="last-updated" />
 
-          <button
+          <RefreshIcon
+            className="refresh-icon"
             onClick={() => {
               loadReadings();
               loadTimestampOfLatestEntry();
             }}
-          >
-            Refresh
-          </button>
+          />
         </div>
       </div>
 

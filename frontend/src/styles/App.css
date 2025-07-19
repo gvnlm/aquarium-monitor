@@ -39,3 +39,12 @@
   align-items: center;
   gap: 0.33em; /* Mimics a single whitespace */
 }
+
+.app .toolbar .last-updated-section .refresh-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.app .toolbar .last-updated-section .refresh-icon:hover {
+  cursor: pointer;
+}
