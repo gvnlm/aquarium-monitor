@@ -25,11 +25,16 @@ const App = () => {
   const [tempReadings, setTempReadings] = useState([]);
 
   const [timestampOfLatestEntry, setTimestampOfLatestEntry] = useState(null);
+  const [timestampOfOldestEntry, setTimestampOfOldestEntry] = useState(null);
 
   useEffect(() => {
     loadReadings();
     loadTimestampOfLatestEntry();
   }, [startDate, endDate, maxNumOfReadings]);
+
+  useEffect(() => {
+    loadTimestampOfOldestEntry();
+  }, []);
 
   const loadReadings = async () => {
     try {
@@ -49,6 +54,15 @@ const App = () => {
     }
   };
 
+  const loadTempReadings = async () => {
+    try {
+      const tempReadings = await tempReadingsService.getRange(startDate, endDate, maxNumOfReadings);
+      setTempReadings(tempReadings);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const loadTimestampOfLatestEntry = async () => {
     try {
       const latestTdsReadings = await tdsReadingsService.getLatest();
@@ -58,10 +72,10 @@ const App = () => {
     }
   };
 
-  const loadTempReadings = async () => {
+  const loadTimestampOfOldestEntry = async () => {
     try {
-      const tempReadings = await tempReadingsService.getRange(startDate, endDate, maxNumOfReadings);
-      setTempReadings(tempReadings);
+      const oldestTdsReadings = await tdsReadingsService.getOldest();
+      setTimestampOfOldestEntry(new Date(oldestTdsReadings.timestamp));
     } catch (error) {
       console.log(error);
     }
@@ -76,6 +90,7 @@ const App = () => {
             endDate={endDate}
             onStartDateChange={setStartDate}
             onEndDateChange={setEndDate}
+            minStartDate={timestampOfOldestEntry}
           />
 
           <MaxPointsForm

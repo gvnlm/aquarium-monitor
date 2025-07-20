@@ -21,7 +21,13 @@ const getLatest = async () => {
   return response.data;
 };
 
+const getOldest = async () => {
+  const response = await axios.get(`${BASE_URL}/oldest`);
+  return response.data;
+};
+
 export default {
   getRange,
   getLatest,
+  getOldest,
 };

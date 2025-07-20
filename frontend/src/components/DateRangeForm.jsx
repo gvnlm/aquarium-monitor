@@ -3,7 +3,13 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import '../styles/DateRangeForm.css';
 
-const DateRangeForm = ({ startDate, endDate, onStartDateChange, onEndDateChange }) => {
+const DateRangeForm = ({
+  startDate,
+  endDate,
+  onStartDateChange,
+  onEndDateChange,
+  minStartDate = null,
+}) => {
   return (
     <div className="date-range-form">
       <div className="date-form">
@@ -17,6 +23,7 @@ const DateRangeForm = ({ startDate, endDate, onStartDateChange, onEndDateChange 
               onStartDateChange(date);
             }
           }}
+          minDate={minStartDate}
           maxDate={new Date()}
           showTimeSelect
           timeIntervals={15}

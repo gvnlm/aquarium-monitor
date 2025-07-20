@@ -190,6 +190,26 @@ router.get('/tempReadings/latest', async (req, res, next) => {
   }
 });
 
+router.get('/tdsReadings/oldest', async (req, res, next) => {
+  try {
+    const latestTdsReading = await TdsReading.findOne().sort({ timestamp: 1 }); // Sort in ascending order (i.e., oldest to latest)
+    return res.status(200).json(latestTdsReading);
+  } catch (err) {
+    console.error('Failed to fetch oldest TDS reading from database.');
+    next(err);
+  }
+});
+
+router.get('/tempReadings/oldest', async (req, res, next) => {
+  try {
+    const latestTempReading = await TempReading.findOne().sort({ timestamp: 1 }); // Sort in ascending order (i.e., oldest to latest)
+    return res.status(200).json(latestTempReading);
+  } catch (err) {
+    console.error('Failed to fetch oldest temperature reading from database.');
+    next(err);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   const { tds_ppm, temp_c } = req.body || {};
 
