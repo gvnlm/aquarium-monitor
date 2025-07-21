@@ -8,13 +8,13 @@
   all: unset;
   width: 4.5ch;
   text-align: center;
-  background-color: var(--grey);
+  background-color: var(--darkest-green);
   border-radius: 0.25em;
 }
 
 .max-points-form button {
   all: unset;
-  background-color: var(--grey);
+  background-color: var(--darkest-green);
   border-radius: 0.25em;
   padding: 0 0.5em;
 }

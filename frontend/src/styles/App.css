@@ -16,8 +16,8 @@
   align-items: center;
   border-radius: 0.75em;
   padding: 1em;
-  background-color: var(--black);
-  color: var(--white);
+  background-color: var(--dark-green);
+  color: var(--light-green);
 }
 
 .app .toolbar .settings {

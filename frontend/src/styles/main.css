@@ -1,7 +1,7 @@
 :root {
-  --black: rgb(10, 10, 10);
-  --grey: rgb(35, 35, 35);
-  --white: rgb(200, 200, 200);
+  --darkest-green: rgb(10, 40, 40);
+  --dark-green: rgb(10, 55, 60);
+  --light-green: rgb(225, 255, 205);
 }
 
 * {
