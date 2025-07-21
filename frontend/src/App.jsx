@@ -100,16 +100,19 @@ const App = () => {
         </div>
 
         <div className="last-updated-section">
-          <span
+          <label
             data-tooltip-id="last-updated"
             data-tooltip-content="Time since last sensor reading was received."
           >
-            Last updated:{' '}
+            Last updated:
+          </label>
+          <ReactTooltip id="last-updated" />
+
+          <span>
             {timestampOfLatestEntry !== null
               ? formatDistanceToNow(timestampOfLatestEntry, { addSuffix: true })
               : 'N/A'}
           </span>
-          <ReactTooltip id="last-updated" />
 
           <RefreshIcon
             className="refresh-icon"
