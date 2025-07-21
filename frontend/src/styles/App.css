@@ -14,9 +14,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
-  border-radius: 1em;
+  border-radius: 0.75em;
   padding: 1em;
+  background-color: var(--black);
+  color: var(--white);
 }
 
 .app .toolbar .settings {

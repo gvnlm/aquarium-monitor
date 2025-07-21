@@ -5,7 +5,22 @@
 }
 
 .max-points-form input {
-  width: 4ch;
+  all: unset;
+  width: 4.5ch;
+  text-align: center;
+  background-color: var(--grey);
+  border-radius: 0.25em;
+}
+
+.max-points-form button {
+  all: unset;
+  background-color: var(--grey);
+  border-radius: 0.25em;
+  padding: 0 0.5em;
+}
+
+.max-points-form button:hover {
+  cursor: pointer;
 }
 
 /* Remove spinner controls from number input */
