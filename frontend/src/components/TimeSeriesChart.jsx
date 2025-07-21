@@ -91,7 +91,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, title, lineColour = green
             labelFormatter={unixTimeMsToString}
             contentStyle={{
               backgroundColor: darkestGreen,
-              border: 'none',
+              border: `1px solid ${lightGreen}`,
               borderRadius: fontSize / 2,
             }}
             cursor={false}
