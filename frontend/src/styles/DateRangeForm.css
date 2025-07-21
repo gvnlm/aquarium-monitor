@@ -25,13 +25,18 @@
   border: 1px solid var(--light-green);
 }
 
+.react-datepicker > * {
+  border: none;
+}
+
 .react-datepicker__month-container {
   border-top-left-radius: inherit;
   border-bottom-left-radius: inherit;
+  border-right: 1px solid var(--light-green);
 }
 
 .react-datepicker__header {
-  background-color: var(--dark-green);
+  background-color: var(--darkest-green);
   border: none;
 }
 
@@ -46,7 +51,7 @@
 
 .date-range-form .date-form .react-datepicker__month-container,
 .date-range-form .date-form .react-datepicker__time-list {
-  background-color: var(--darkest-green);
+  background-color: var(--dark-green);
   color: var(--light-green);
 }
 
@@ -68,7 +73,7 @@
 .react-datepicker__time-list-item:hover,
 .react-datepicker__day--selected,
 .react-datepicker__time-list-item--selected {
-  background-color: var(--dark-green) !important;
+  background-color: var(--darkest-green) !important;
 }
 
 .react-datepicker__day--selected,
