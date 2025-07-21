@@ -51,3 +51,9 @@
 .app .toolbar .last-updated-section .refresh-icon:hover {
   cursor: pointer;
 }
+
+.app .react-tooltip {
+  background-color: transparent;
+  color: var(--light-green);
+  font-size: inherit;
+}

@@ -19,12 +19,12 @@ const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
     <form className="max-points-form" onSubmit={handleSubmit}>
       <label
         htmlFor="points"
-        data-tooltip-id="points"
+        data-tooltip-id="points-tooltip"
         data-tooltip-html="Max number of data points per chart.<br/>Excess data is aggregated."
       >
         Points:
       </label>
-      <ReactTooltip id="points" />
+      <ReactTooltip id="points-tooltip" className="react-tooltip" />
 
       <input
         id="points"

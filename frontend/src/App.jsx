@@ -101,12 +101,12 @@ const App = () => {
 
         <div className="last-updated-section">
           <label
-            data-tooltip-id="last-updated"
+            data-tooltip-id="last-updated-tooltip"
             data-tooltip-content="Time since last sensor reading was received."
           >
             Last updated:
           </label>
-          <ReactTooltip id="last-updated" />
+          <ReactTooltip id="last-updated-tooltip" className="react-tooltip" />
 
           <span>
             {timestampOfLatestEntry !== null
