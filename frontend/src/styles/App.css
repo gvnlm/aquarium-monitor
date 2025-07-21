@@ -2,10 +2,10 @@
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  padding: 1vh 2vw;
+  padding: 2em 1em;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .app .toolbar {
@@ -33,7 +33,7 @@
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .app .toolbar .last-updated-section {

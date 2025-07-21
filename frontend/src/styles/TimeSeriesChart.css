@@ -3,9 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--darkest-green);
+  border-radius: 1em;
+  padding: 1em;
 }
 
 .time-series-chart h1 {
+  margin: 0 0 0.5em 0;
   font-size: 24px;
   font-weight: bolder;
   letter-spacing: normal;
