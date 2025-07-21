@@ -16,6 +16,7 @@
   align-items: center;
   background-color: var(--dark-green);
   color: var(--light-green);
+  gap: 0.33rem 0.33rem;
 }
 
 .app .toolbar .settings {
