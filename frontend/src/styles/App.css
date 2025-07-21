@@ -45,8 +45,9 @@
 }
 
 .app .toolbar .last-updated-section .refresh-icon {
-  width: 20px;
-  height: 20px;
+  width: 1.25em;
+  height: 1.25em;
+  color: var(--light-green);
 }
 
 .app .toolbar .last-updated-section .refresh-icon:hover {
