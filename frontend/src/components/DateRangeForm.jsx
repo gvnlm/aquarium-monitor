@@ -24,7 +24,7 @@ const DateRangeForm = ({
             }
           }}
           minDate={minStartDate}
-          maxDate={new Date()}
+          maxDate={endDate}
           showTimeSelect
           timeIntervals={15}
           dateFormat="d/MM/yy, h:mm aa"
