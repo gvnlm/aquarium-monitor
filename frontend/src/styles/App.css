@@ -53,7 +53,13 @@
 }
 
 .app .react-tooltip {
-  background-color: transparent;
+  background-color: var(--darkest-green);
+  border: 1px solid var(--light-green);
   color: var(--light-green);
   font-size: inherit;
+}
+
+.app .react-tooltip-arrow {
+  border-bottom: 1px solid var(--light-green);
+  border-right: 1px solid var(--light-green);
 }
