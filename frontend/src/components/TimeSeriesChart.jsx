@@ -11,8 +11,14 @@ import {
 import '../styles/TimeSeriesChart.css';
 
 const fontSize = 16;
+const darkestGreen = 'rgb(10, 40, 40)';
+const darkGreen = 'rgb(10, 55, 60)';
+const green = 'rgb(25, 190, 140)';
+const lightGreen = 'rgb(225, 255, 205)';
 
-const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
+const dotRadius = 4;
+
+const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, title, lineColour = green }) => {
   // Convert data's timestamp strings to numeric representation (since Recharts requires numeric values for
   // accurate time axis scaling)
   const processedData = data.map((datum) => ({
@@ -29,10 +35,10 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
 
     return (
       <g>
-        <text x={cx} y={cy + fontSize} textAnchor="middle" fill={lineColour}>
+        <text x={cx} y={cy + dotRadius + fontSize} textAnchor="middle" fill={lineColour}>
           {payload[yDataKey]}
         </text>
-        <circle cx={cx} cy={cy} r={2} fill={lineColour} />
+        <circle cx={cx} cy={cy} r={dotRadius} fill={lineColour} />
       </g>
     );
   };
@@ -42,7 +48,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
       <h1>{title}</h1>
       <ResponsiveContainer className="responsive-container" width="100%" height="100%">
         <LineChart data={processedData} margin={{ right: fontSize * 1.5 }}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid strokeDasharray="2 4" stroke={lightGreen} strokeOpacity={0.33} />
 
           <XAxis
             dataKey="timestamp"
@@ -50,16 +56,46 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, lineColour, title }) => {
             scale="time"
             domain={['auto', 'auto']}
             tickFormatter={unixTimeMsToString}
+            axisLine={{ stroke: lightGreen }}
+            tickLine={{ stroke: lightGreen }}
+            tick={{ fill: lightGreen }}
           />
 
           <YAxis
             domain={[0, 'auto']}
-            label={{ value: yAxisTitle, position: 'insideLeft', angle: -90, offset: 8 }}
+            label={{
+              value: yAxisTitle,
+              position: 'insideLeft',
+              angle: -90,
+              offset: 8,
+              fill: green,
+            }}
+            axisLine={{ stroke: lightGreen }}
+            tickLine={{ stroke: lightGreen }}
+            tick={{ fill: lightGreen }}
           />
 
-          <Line type="basis" dataKey={yDataKey} stroke={lineColour} dot={<ShowLastDot />} />
+          <Line
+            type="basis"
+            dataKey={yDataKey}
+            stroke={lineColour}
+            dot={<ShowLastDot />}
+            activeDot={{
+              r: dotRadius,
+              stroke: green,
+              fill: green,
+            }}
+          />
 
-          <Tooltip labelFormatter={unixTimeMsToString} />
+          <Tooltip
+            labelFormatter={unixTimeMsToString}
+            contentStyle={{
+              backgroundColor: darkestGreen,
+              border: 'none',
+              borderRadius: fontSize / 2,
+            }}
+            cursor={false}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>

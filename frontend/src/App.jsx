@@ -125,18 +125,11 @@ const App = () => {
       </div>
 
       <div className="charts">
-        <TimeSeriesChart
-          data={tdsReadings}
-          yDataKey="ppm"
-          yAxisTitle="ppm"
-          lineColour={'green'}
-          title="TDS"
-        />
+        <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" title="TDS" />
         <TimeSeriesChart
           data={tempReadings}
           yDataKey="celsius"
           yAxisTitle="°C"
-          lineColour={'red'}
           title="Temperature"
         />
       </div>

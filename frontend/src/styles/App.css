@@ -14,8 +14,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  border-radius: 0.75em;
-  padding: 1em;
   background-color: var(--dark-green);
   color: var(--light-green);
 }

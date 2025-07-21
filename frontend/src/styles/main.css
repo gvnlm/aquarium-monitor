@@ -1,7 +1,11 @@
 :root {
   --darkest-green: rgb(10, 40, 40);
   --dark-green: rgb(10, 55, 60);
+  --green: rgb(25, 190, 140);
   --light-green: rgb(225, 255, 205);
+
+  background-color: var(--dark-green);
+  color: var(--light-green);
 }
 
 * {

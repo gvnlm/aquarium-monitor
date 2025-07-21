@@ -7,6 +7,9 @@
 
 .time-series-chart h1 {
   font-size: 24px;
+  font-weight: bolder;
+  letter-spacing: normal;
+  color: var(--green);
 }
 
 /* Disable focus outline when chart is clicked */
