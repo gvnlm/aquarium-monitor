@@ -50,8 +50,20 @@
   color: var(--light-green);
 }
 
-.app .toolbar .last-updated-section .refresh-icon:hover {
+.app .toolbar .last-updated-section .refresh-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.08s ease-in-out;
+}
+
+.app .toolbar .last-updated-section .refresh-icon-wrapper:hover {
   cursor: pointer;
+  transform: scale(1.15);
+}
+
+.app .toolbar .last-updated-section .refresh-icon-wrapper:active {
+  transform: none;
 }
 
 .app .react-tooltip {

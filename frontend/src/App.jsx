@@ -113,14 +113,15 @@ const App = () => {
               ? formatDistanceToNow(timestampOfLatestEntry, { addSuffix: true })
               : 'N/A'}
           </span>
-
-          <RefreshIcon
-            className="refresh-icon"
-            onClick={() => {
-              loadReadings();
-              loadTimestampOfLatestEntry();
-            }}
-          />
+          <div className="refresh-icon-wrapper">
+            <RefreshIcon
+              className="refresh-icon"
+              onClick={() => {
+                loadReadings();
+                loadTimestampOfLatestEntry();
+              }}
+            />
+          </div>
         </div>
       </div>
 

@@ -17,10 +17,16 @@
   background-color: var(--darkest-green);
   border-radius: 0.25em;
   padding: 0 0.5em;
+  transition: transform 0.08s ease-in-out;
 }
 
 .max-points-form button:hover {
   cursor: pointer;
+  transform: scale(1.1);
+}
+
+.max-points-form button:active {
+  transform: none;
 }
 
 /* Remove spinner controls from number input */
