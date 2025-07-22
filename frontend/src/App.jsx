@@ -102,7 +102,7 @@ const App = () => {
         <div className="last-updated-section">
           <label
             data-tooltip-id="last-updated-tooltip"
-            data-tooltip-content="Time since last sensor reading was received."
+            data-tooltip-html="Time since last sensor reading was received.<br/>Updated every ~4 minutes."
           >
             Last updated:
           </label>
