@@ -6,6 +6,7 @@
 
   background-color: var(--dark-green);
   color: var(--light-green);
+  caret-color: var(--light-green);
 }
 
 * {
