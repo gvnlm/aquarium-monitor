@@ -4,6 +4,14 @@ const express = require('express');
 const TdsReading = require('../models/tdsReading');
 const TempReading = require('../models/tempReading');
 
+const emailAlert = require('../utils/mailer');
+
+// Thresholds for email alert
+const TDS_PPM_MIN_LIM = 200;
+const TDS_PPM_MAX_LIM = 250;
+const TEMP_C_MIN_LIM = 24.5;
+const TEMP_C_MAX_LIM = 27;
+
 const router = express.Router();
 
 router.get('/tdsReadings', async (req, res, next) => {
@@ -210,6 +218,7 @@ router.get('/tempReadings/oldest', async (req, res, next) => {
   }
 });
 
+// Saves received readings to MongoDB, and sends an email alert if a reading is outside its set threshold
 router.post('/', async (req, res, next) => {
   const { tds_ppm, temp_c } = req.body || {};
 
@@ -223,10 +232,27 @@ router.post('/', async (req, res, next) => {
     return res.status(400).json({ error: '"temp_c" property is missing.' });
   }
 
+  // Check if readings are within set thresholds, if not, alert via email
+
+  if (tds_ppm < TDS_PPM_MIN_LIM || tds_ppm > TDS_PPM_MAX_LIM) {
+    emailAlert({
+      subject: `Aquarium TDS alert: ${tds_ppm} ppm`,
+      text: `Aquarium TDS is out of range.\nCurrent reading: ${tds_ppm} ppm\nSafe range: ${TDS_PPM_MIN_LIM} - ${TDS_PPM_MAX_LIM} ppm`,
+    });
+  }
+
+  if (temp_c < TEMP_C_MIN_LIM || temp_c > TEMP_C_MAX_LIM) {
+    emailAlert({
+      subject: `Aquarium temperature alert: ${temp_c} °C`,
+      text: `Aquarium temperature is out of range.\nCurrent reading: ${temp_c} °C\nSafe range: ${TEMP_C_MIN_LIM} - ${TEMP_C_MAX_LIM} °C`,
+    });
+  }
+
+  // Try save readings to database
+
   const newTdsReading = new TdsReading({ ppm: tds_ppm });
   const newTempReading = new TempReading({ celsius: temp_c });
 
-  // Try save readings to database
   try {
     const savedTdsReading = await newTdsReading.save();
     const savedTempReading = await newTempReading.save();
