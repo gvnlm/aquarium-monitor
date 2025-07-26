@@ -15,7 +15,7 @@ import './styles/App.css';
 
 const App = () => {
   // Date range of readings to display
-  const [startDate, setStartDate] = useState(getDateXHoursAgo(24));
+  const [startDate, setStartDate] = useState(getDateXHoursAgo(24 * 7));
   const [endDate, setEndDate] = useState(new Date());
 
   // Maximum number of readings (i.e., readings) displayed on each chart
