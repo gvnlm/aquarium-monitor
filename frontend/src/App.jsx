@@ -13,16 +13,19 @@ import tempReadingsService from './services/tempReadings';
 
 import './styles/App.css';
 
+const DEFAULT_START_DATE = getDateXHoursAgo(24 * 7);
+const DEFAULT_MAX_NUMBER_OF_READINGS = 500;
+
 const TDS_CHART_Y_AXIS_DOMAIN = [180, 280];
 const TEMP_CHART_Y_AXIS_DOMAIN = [16, 32];
 
 const App = () => {
-  // Date range of readings to display
-  const [startDate, setStartDate] = useState(getDateXHoursAgo(24 * 7));
+  // Date range of readings to display on charts
+  const [startDate, setStartDate] = useState(DEFAULT_START_DATE);
   const [endDate, setEndDate] = useState(new Date());
 
   // Maximum number of readings (i.e., readings) displayed on each chart
-  const [maxNumOfReadings, setMaxNumOfReadings] = useState(360);
+  const [maxNumOfReadings, setMaxNumOfReadings] = useState(DEFAULT_MAX_NUMBER_OF_READINGS);
 
   const [tdsReadings, setTdsReadings] = useState([]);
   const [tempReadings, setTempReadings] = useState([]);
@@ -148,10 +151,10 @@ const App = () => {
   );
 };
 
-const getDateXHoursAgo = (x) => {
+function getDateXHoursAgo(x) {
   const now = new Date();
   now.setHours(now.getHours() - x);
   return now;
-};
+}
 
 export default App;
