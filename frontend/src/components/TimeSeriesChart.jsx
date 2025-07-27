@@ -18,7 +18,14 @@ const lightGreen = 'rgb(225, 255, 205)';
 
 const dotRadius = 4;
 
-const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, title, lineColour = green }) => {
+const TimeSeriesChart = ({
+  data,
+  yDataKey,
+  yAxisTitle,
+  yAxisDomain,
+  title,
+  lineColour = green,
+}) => {
   // Convert data's timestamp strings to numeric representation (since Recharts requires numeric values for
   // accurate time axis scaling)
   const processedData = data.map((datum) => ({
@@ -62,7 +69,7 @@ const TimeSeriesChart = ({ data, yDataKey, yAxisTitle, title, lineColour = green
           />
 
           <YAxis
-            domain={[0, 'auto']}
+            domain={yAxisDomain}
             label={{
               value: yAxisTitle,
               position: 'insideLeft',

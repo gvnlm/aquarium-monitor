@@ -13,6 +13,9 @@ import tempReadingsService from './services/tempReadings';
 
 import './styles/App.css';
 
+const TDS_CHART_Y_AXIS_DOMAIN = [180, 280];
+const TEMP_CHART_Y_AXIS_DOMAIN = [16, 32];
+
 const App = () => {
   // Date range of readings to display
   const [startDate, setStartDate] = useState(getDateXHoursAgo(24 * 7));
@@ -126,11 +129,18 @@ const App = () => {
       </div>
 
       <div className="charts">
-        <TimeSeriesChart data={tdsReadings} yDataKey="ppm" yAxisTitle="ppm" title="TDS" />
+        <TimeSeriesChart
+          data={tdsReadings}
+          yDataKey="ppm"
+          yAxisTitle="ppm"
+          yAxisDomain={TDS_CHART_Y_AXIS_DOMAIN}
+          title="TDS"
+        />
         <TimeSeriesChart
           data={tempReadings}
           yDataKey="celsius"
           yAxisTitle="°C"
+          yAxisDomain={TEMP_CHART_Y_AXIS_DOMAIN}
           title="Temperature"
         />
       </div>
