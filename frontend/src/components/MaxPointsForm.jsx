@@ -3,20 +3,35 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 
 import '../styles/MaxPointsForm.css';
 
+const MIN_MAX_NUM_OF_READINGS = 1;
+const MAX_MAX_NUM_OF_READINGS = 9999;
+
 const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
   const [input, setInput] = useState(maxNumOfReadings);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleInputChange = (e) => {
+    setInput(e.target.value);
+  };
 
+  const submitForm = () => {
     const num = Number(input);
-    if (num > 0) {
+
+    if (num >= MIN_MAX_NUM_OF_READINGS && num <= MAX_MAX_NUM_OF_READINGS) {
       onMaxNumOfReadingsChange(num);
+    } else {
+      setInput(maxNumOfReadings);
+    }
+  };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      submitForm();
+      e.target.blur();
     }
   };
 
   return (
-    <form className="max-points-form" onSubmit={handleSubmit}>
+    <div className="max-points-form">
       <label
         htmlFor="points"
         data-tooltip-id="points-tooltip"
@@ -29,14 +44,14 @@ const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
       <input
         id="points"
         type="number"
-        min="1"
-        max="9999"
+        min={MIN_MAX_NUM_OF_READINGS}
+        max={MAX_MAX_NUM_OF_READINGS}
         value={input}
-        onChange={(e) => setInput(e.target.value)}
+        onChange={handleInputChange}
+        onBlur={submitForm}
+        onKeyDown={handleInputKeyDown}
       />
-
-      <button type="submit">Set</button>
-    </form>
+    </div>
   );
 };
 
