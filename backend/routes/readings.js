@@ -12,6 +12,9 @@ const TDS_PPM_MAX_LIM = 250;
 const TEMP_C_MIN_LIM = 24.5;
 const TEMP_C_MAX_LIM = 27;
 
+// Sentinel value returned by DS18B20 temperature sensor when disconnected or malfunctioning
+const TEMP_C_SENTINEL = -127;
+
 const router = express.Router();
 
 router.get('/tdsReadings', async (req, res, next) => {
@@ -218,7 +221,7 @@ router.get('/tempReadings/oldest', async (req, res, next) => {
   }
 });
 
-// Saves received readings to MongoDB, and sends an email alert if a reading is outside its set threshold
+// Saves received valid readings to MongoDB, and sends an email alert if a reading is outside its set threshold
 router.post('/', async (req, res, next) => {
   const { tds_ppm, temp_c } = req.body || {};
 
@@ -241,7 +244,12 @@ router.post('/', async (req, res, next) => {
     });
   }
 
-  if (temp_c < TEMP_C_MIN_LIM || temp_c > TEMP_C_MAX_LIM) {
+  if (temp_c === TEMP_C_SENTINEL) {
+    emailAlert({
+      subject: 'Aquarium temperature read failed',
+      text: 'Temperature sensor failed to read - check wiring.',
+    });
+  } else if (temp_c < TEMP_C_MIN_LIM || temp_c > TEMP_C_MAX_LIM) {
     emailAlert({
       subject: `Aquarium temperature alert: ${temp_c} °C`,
       text: `Aquarium temperature is out of range.\nCurrent reading: ${temp_c} °C\nSafe range: ${TEMP_C_MIN_LIM} - ${TEMP_C_MAX_LIM} °C`,
@@ -255,9 +263,13 @@ router.post('/', async (req, res, next) => {
 
   try {
     const savedTdsReading = await newTdsReading.save();
-    const savedTempReading = await newTempReading.save();
+    console.log('Successfully saved TDS reading to database.');
 
-    console.log('Successfully saved readings to database.');
+    const savedTempReading = null;
+    if (temp_c !== TEMP_C_SENTINEL) {
+      savedTempReading = await newTempReading.save();
+      console.log('Successfully saved temperature reading to database.');
+    }
 
     return res
       .status(201)
