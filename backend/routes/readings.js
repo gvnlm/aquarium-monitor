@@ -265,7 +265,7 @@ router.post('/', async (req, res, next) => {
     const savedTdsReading = await newTdsReading.save();
     console.log('Successfully saved TDS reading to database.');
 
-    const savedTempReading = null;
+    let savedTempReading = null;
     if (temp_c !== TEMP_C_SENTINEL) {
       savedTempReading = await newTempReading.save();
       console.log('Successfully saved temperature reading to database.');
