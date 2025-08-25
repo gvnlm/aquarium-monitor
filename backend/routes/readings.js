@@ -48,7 +48,7 @@ router.get('/tdsReadings', async (req, res, next) => {
           $gte: startDate,
           $lte: endDate,
         },
-      });
+      }).sort({ timestamp: 1 });
     } else {
       // Aggregate readings into `maxNumOfReadings` buckets
 
@@ -130,7 +130,7 @@ router.get('/tempReadings', async (req, res, next) => {
           $gte: startDate,
           $lte: endDate,
         },
-      });
+      }).sort({ timestamp: 1 });
     } else {
       // Aggregate readings into `maxNumOfReadings` buckets
 
