@@ -11,7 +11,7 @@ constexpr char WIFI_NAME[]{SECRET_WIFI_NAME};
 constexpr char WIFI_PW[]{SECRET_WIFI_PW};
 
 // Backend server where we will send sensor readings to
-constexpr char SERVER_HOST_NAME[]{"aquarium-monitor-server.onrender.com"};
+constexpr char SERVER_HOST_NAME[]{"aquarium-monitor-backend-c4hzfra3ckbdhqdu.newzealandnorth-01.azurewebsites.net"};
 
 // Max time (ms) requests can be delayed by when the backend server hosted on Render has spun down 
 // due to inactivity
