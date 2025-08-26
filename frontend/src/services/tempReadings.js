@@ -1,9 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL =
-  import.meta.env.MODE === 'development'
-    ? 'http://localhost:3001/tempReadings' // Local server
-    : 'https://aquarium-monitor-backend-c4hzfra3ckbdhqdu.newzealandnorth-01.azurewebsites.net/tempReadings'; // Production server
+const BASE_URL = `${import.meta.env.VITE_BACKEND_BASE_URL}/tempReadings`;
 
 const getRange = async (startDate, endDate, maxNumOfReadings) => {
   const response = await axios.get(BASE_URL, {
