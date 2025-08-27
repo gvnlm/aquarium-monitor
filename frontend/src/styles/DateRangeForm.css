@@ -90,3 +90,8 @@
 .react-datepicker__day--today {
   font-weight: inherit;
 }
+
+/* Remove highlight from selected day in other months */
+.react-datepicker__day--keyboard-selected {
+  background-color: transparent;
+}
