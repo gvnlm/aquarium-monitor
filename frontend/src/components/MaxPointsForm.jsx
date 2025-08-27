@@ -7,20 +7,31 @@ const MIN_MAX_NUM_OF_READINGS = 1;
 const MAX_MAX_NUM_OF_READINGS = 1000;
 
 const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
-  const [input, setInput] = useState(maxNumOfReadings);
+  const [input, setInput] = useState(String(maxNumOfReadings));
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
 
   const submitForm = () => {
-    const num = Number(input);
-
-    if (num >= MIN_MAX_NUM_OF_READINGS && num <= MAX_MAX_NUM_OF_READINGS) {
-      onMaxNumOfReadingsChange(num);
-    } else {
-      setInput(maxNumOfReadings);
+    if (input === '') {
+      setInput(String(maxNumOfReadings));
+      return;
     }
+
+    let num = Number(input);
+
+    if (Number.isNaN(num)) {
+      setInput(String(maxNumOfReadings));
+      return;
+    }
+
+    // Clamp `num` within set limits
+    num = Math.max(num, MIN_MAX_NUM_OF_READINGS);
+    num = Math.min(num, MAX_MAX_NUM_OF_READINGS);
+
+    onMaxNumOfReadingsChange(num);
+    setInput(String(num));
   };
 
   const handleInputKeyDown = (e) => {
