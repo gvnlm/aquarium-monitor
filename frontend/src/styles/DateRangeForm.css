@@ -64,9 +64,9 @@
   opacity: 0.2;
 }
 
-/* Selectable dates (i.e., dates between min and max date) */
-.react-datepicker__day:not(.react-datepicker__day--disabled) {
-  color: var(--light-green);
+.react-datepicker__day:not(.react-datepicker__day--disabled), /* Selectable dates (i.e., dates between min and max date) */
+.react-datepicker__time-list-item--selected {
+  color: var(--light-green) !important;
 }
 
 .react-datepicker__day:not(.react-datepicker__day--disabled):hover,
@@ -91,7 +91,7 @@
   font-weight: inherit;
 }
 
-/* Remove highlight from selected day in other months */
+/* Remove highlight from selected day  in other months */
 .react-datepicker__day--keyboard-selected {
   background-color: transparent;
 }
