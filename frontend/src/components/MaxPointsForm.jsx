@@ -4,7 +4,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip';
 import '../styles/MaxPointsForm.css';
 
 const MIN_MAX_NUM_OF_READINGS = 1;
-const MAX_MAX_NUM_OF_READINGS = 9999;
+const MAX_MAX_NUM_OF_READINGS = 1000;
 
 const MaxPointsForm = ({ maxNumOfReadings, onMaxNumOfReadingsChange }) => {
   const [input, setInput] = useState(maxNumOfReadings);

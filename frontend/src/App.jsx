@@ -14,7 +14,7 @@ import tempReadingsService from './services/tempReadings';
 import './styles/App.css';
 
 const DEFAULT_START_DATE = getDateXHoursAgo(24 * 7);
-const DEFAULT_MAX_NUMBER_OF_READINGS = 500;
+const DEFAULT_MAX_NUMBER_OF_READINGS = 400;
 
 const TDS_CHART_Y_AXIS_DOMAIN = [180, 280];
 const TEMP_CHART_Y_AXIS_DOMAIN = [16, 32];
