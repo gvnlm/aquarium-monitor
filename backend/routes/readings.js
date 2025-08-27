@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 
 // Mongoose models
 const TdsReading = require('../models/tdsReading');
@@ -223,6 +224,16 @@ router.get('/tempReadings/oldest', async (req, res, next) => {
 
 // Saves received valid readings to MongoDB, and sends an email alert if a reading is outside its set threshold
 router.post('/', async (req, res, next) => {
+  const apiKey = req.header('X-API-Key');
+
+  if (apiKey === undefined) {
+    return res.status(401).json({ error: 'Missing API key.' });
+  }
+
+  if (apiKey !== process.env.API_KEY) {
+    return res.status(401).json({ error: 'Invalid API key.' });
+  }
+
   const { tds_ppm, temp_c } = req.body || {};
 
   if (tds_ppm === undefined) {

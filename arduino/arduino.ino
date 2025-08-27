@@ -65,12 +65,21 @@ void loop() {
 
     // Send sensor readings to backend server via an HTTP POST request
     client.println("POST / HTTP/1.1");
+
     client.print("Host: ");
     client.println(SERVER_HOST_NAME);
+
     client.println("Content-Type: application/json");
+
     client.print("Content-Length: ");
     client.println(payload.length());
+
     client.println("Connection: close");
+
+    // Backend verifies this
+    client.print("X-API-Key: ");
+    client.println(SECRET_API_KEY);
+
     client.println();
     client.println(payload);
 
