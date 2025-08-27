@@ -17,3 +17,7 @@
   font-weight: 300;
   letter-spacing: -1px;
 }
+
+::selection {
+  background-color: rgba(25, 190, 140, 0.2);
+}
