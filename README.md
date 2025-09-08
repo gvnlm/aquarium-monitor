@@ -8,7 +8,7 @@ It features a [dashboard](https://ambitious-pond-01c6b4600.1.azurestaticapps.net
   <img src="./docs/app.png"/>
 </p>
 
-The Arduino sends sensor readings to the backend server every ~4 minutes, where they are stored in MongoDB, and served to the frontend on request.
+The Arduino sends sensor readings to the backend server every ~4 minutes, where they are stored in Cosmos DB, and served to the frontend on request.
 
 <p align="center">
   <img src="./docs/data-flow-diagram.svg"/>
