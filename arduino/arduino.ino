@@ -32,10 +32,15 @@ WiFiSSLClient client;
 void setup() {
   Serial.begin(9600);
   sensors.begin();
-  start_wifi_client();
+  connect_wifi_client();
 }
 
 void loop() {
+  // If WiFi connection is lost, attempt to reconnect
+  if (WiFi.status() != WL_CONNECTED) {
+    connect_wifi_client(); // Blocking
+  }
+
   // Read TDS
   int tds_analog{analogRead(TDS_PIN)};
   double tds_voltage{analog_to_voltage(tds_analog)};
@@ -117,7 +122,7 @@ void loop() {
   delay(SENSORS_READ_DELAY);
 }
 
-void start_wifi_client() {
+void connect_wifi_client() {
   // Check Arduino has WiFi module
   if (WiFi.status() == WL_NO_MODULE) {
     Serial.println("ERROR: No WiFi module found");
