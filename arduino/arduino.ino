@@ -140,7 +140,7 @@ void connect_wifi_client() {
     Serial.println();
 
     status = WiFi.begin(WIFI_NAME, WIFI_PW);
-    delay(10000);
+    delay(20000);
 
     if (status != WL_CONNECTED) {
       Serial.print("Failed to connect to ");
